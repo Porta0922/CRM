@@ -11,7 +11,7 @@ import {
   TrendingUp, Wallet, AlertTriangle, CheckCircle,
   Plus, Calendar, ArrowRight, DollarSign, Clock
 } from 'lucide-react'
-import { PaymentButton } from './PaymentButton'
+import { PaymentButton } from '@/components/PaymentButton'
 
 const fmt = (n: number) =>
   new Intl.NumberFormat('es-PY', {

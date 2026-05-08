@@ -1,7 +1,7 @@
 // app/calendar/page.tsx
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import CalendarView from '@/components/CalendarView' // Ajustar path según estructura
+import CalendarView from '@/components/CalendarView'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
