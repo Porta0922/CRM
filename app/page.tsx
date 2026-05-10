@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import {
   TrendingUp, Wallet, AlertTriangle, CheckCircle,
-  Plus, Calendar, ArrowRight, DollarSign, Clock
+  Plus, Calendar, ArrowRight, DollarSign, Clock, User
 } from 'lucide-react'
 import { PaymentButton } from '@/components/PaymentButton'
 
