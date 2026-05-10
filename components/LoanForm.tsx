@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
-import { AlertCircle, Calculator, CheckCircle2 } from 'lucide-react'
+import { AlertCircle, Calculator, CheckCircle } from 'lucide-react'
 
 interface Borrower {
   id: string
@@ -149,7 +149,7 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
   if (success) {
     return (
       <Card className="max-w-md mx-auto mt-16 text-center p-8">
-        <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-4" />
+        <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
         <CardTitle className="text-xl mb-2">¡Préstamo creado!</CardTitle>
         <CardDescription>Redirigiendo al dashboard...</CardDescription>
       </Card>
