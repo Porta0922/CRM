@@ -10,10 +10,11 @@ import { toast } from 'sonner' // Asumiendo que usas sonner para notificaciones
 interface PaymentButtonProps {
   installmentId: string
   borrowerNombre: string
+  borrowerContacto?: string | null
   monto: string
 }
 
-export function PaymentButton({ installmentId, borrowerNombre, monto }: PaymentButtonProps) {
+export function PaymentButton({ installmentId, borrowerNombre, borrowerContacto, monto }: PaymentButtonProps) {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -29,8 +30,17 @@ export function PaymentButton({ installmentId, borrowerNombre, monto }: PaymentB
     })
 
     if (error) {
-      alert('Error al registrar pago: ' + error.message)
+      toast.error('Error al registrar pago: ' + error.message)
     } else {
+      toast.success('Pago registrado correctamente', {
+        action: borrowerContacto ? {
+          label: 'WhatsApp',
+          onClick: () => {
+            const url = getWhatsAppLink(borrowerContacto, WA_MESSAGES.confirmation(borrowerNombre, monto))
+            window.open(url, '_blank')
+          }
+        } : undefined
+      })
       router.refresh()
     }
     setIsLoading(false)
@@ -53,3 +63,5 @@ export function PaymentButton({ installmentId, borrowerNombre, monto }: PaymentB
     </Button>
   )
 }
+
+import { getWhatsAppLink, WA_MESSAGES } from '@/lib/whatsapp'

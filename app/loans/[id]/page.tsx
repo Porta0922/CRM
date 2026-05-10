@@ -37,16 +37,33 @@ export default async function LoanDetailPage({ params }: { params: { id: string 
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-5xl space-y-8">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/loans">
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
-        </Button>
-        <div>
-          <h1 className="text-2xl font-bold">Detalle de Préstamo</h1>
-          <p className="text-muted-foreground">{loanData.borrower_nombre}</p>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/loans">
+              <ArrowLeft className="w-5 h-5" />
+            </Link>
+          </Button>
+          <div>
+            <h1 className="text-2xl font-bold">Detalle de Préstamo</h1>
+            <p className="text-muted-foreground">{loanData.borrower_nombre}</p>
+          </div>
         </div>
+        {loanData.borrower_contacto && (
+          <Button className="bg-green-600 hover:bg-green-700 text-white" asChild>
+            <a 
+              href={getWhatsAppLink(
+                loanData.borrower_contacto, 
+                WA_MESSAGES.welcome(loanData.borrower_nombre, loanData.id.slice(0,8), loanData.fecha_inicio)
+              )} 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <MessageCircle className="w-4 h-4 mr-2" />
+              Enviar Bienvenida
+            </a>
+          </Button>
+        )}
       </div>
 
       <div className="grid md:grid-cols-3 gap-6">
@@ -102,13 +119,30 @@ export default async function LoanDetailPage({ params }: { params: { id: string 
                       {inst.estado.toUpperCase()}
                     </p>
                   </div>
-                  {inst.estado === 'pendiente' && (
-                    <PaymentButton 
-                      installmentId={inst.id}
-                      borrowerNombre={loanData.borrower_nombre}
-                      monto={fmt(inst.monto_cuota)}
-                    />
-                  )}
+                  <div className="flex items-center gap-2">
+                    {inst.estado === 'pendiente' && loanData.borrower_contacto && (
+                      <Button variant="outline" size="icon" className="h-8 w-8 text-green-600 border-green-200 bg-green-50 hover:bg-green-100" asChild>
+                        <a 
+                          href={getWhatsAppLink(
+                            loanData.borrower_contacto, 
+                            WA_MESSAGES.reminder(loanData.borrower_nombre, fmt(inst.monto_cuota), inst.fecha_vencimiento === new Date().toISOString().split('T')[0] ? 0 : 'pronto')
+                          )} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                        </a>
+                      </Button>
+                    )}
+                    {inst.estado === 'pendiente' && (
+                      <PaymentButton 
+                        installmentId={inst.id}
+                        borrowerNombre={loanData.borrower_nombre}
+                        borrowerContacto={loanData.borrower_contacto}
+                        monto={fmt(inst.monto_cuota)}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -118,3 +152,6 @@ export default async function LoanDetailPage({ params }: { params: { id: string 
     </div>
   )
 }
+
+import { MessageCircle, Share2 } from 'lucide-react'
+import { getWhatsAppLink, WA_MESSAGES } from '@/lib/whatsapp'

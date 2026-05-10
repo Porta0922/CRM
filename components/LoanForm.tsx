@@ -18,7 +18,8 @@ import {
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
 import { Textarea } from '@/components/ui/textarea'
-import { AlertCircle, Calculator, CheckCircle } from 'lucide-react'
+import { AlertCircle, Calculator, CheckCircle, MessageCircle } from 'lucide-react'
+import { getWhatsAppLink, WA_MESSAGES } from '@/lib/whatsapp'
 
 interface Borrower {
   id: string
@@ -147,11 +148,37 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
   }
 
   if (success) {
+    const selectedB = borrowers.find(b => b.id === borrowerId)
     return (
-      <Card className="max-w-md mx-auto mt-16 text-center p-8">
-        <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-4" />
-        <CardTitle className="text-xl mb-2">¡Préstamo creado!</CardTitle>
-        <CardDescription>Redirigiendo al dashboard...</CardDescription>
+      <Card className="max-w-md mx-auto mt-16 text-center p-8 border-none shadow-2xl bg-white/80 backdrop-blur-sm">
+        <div className="w-20 h-20 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle className="w-10 h-10 text-green-500" />
+        </div>
+        <CardTitle className="text-2xl font-bold mb-2">¡Préstamo creado con éxito!</CardTitle>
+        <CardDescription className="text-slate-500 mb-8">
+          El plan de pagos ha sido generado correctamente.
+        </CardDescription>
+        
+        <div className="space-y-3">
+          {selectedB?.contacto && (
+            <Button className="w-full bg-green-600 hover:bg-green-700 text-white py-6" asChild>
+              <a 
+                href={getWhatsAppLink(
+                  selectedB.contacto, 
+                  WA_MESSAGES.welcome(selectedB.nombre, 'NUEVO', fechaInicio)
+                )} 
+                target="_blank" 
+                rel="noopener noreferrer"
+              >
+                <MessageCircle className="w-5 h-5 mr-2" />
+                Enviar bienvenida por WhatsApp
+              </a>
+            </Button>
+          )}
+          <Button variant="outline" className="w-full py-6" onClick={() => router.push('/')}>
+            Ir al Dashboard
+          </Button>
+        </div>
       </Card>
     )
   }

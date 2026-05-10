@@ -159,6 +159,7 @@ export default async function DashboardPage() {
                           <PaymentButton 
                             installmentId={item.id} 
                             borrowerNombre={item.borrower_nombre}
+                            borrowerContacto={item.borrower_contacto}
                             monto={fmt(item.monto_cuota)}
                           />
                         </div>
