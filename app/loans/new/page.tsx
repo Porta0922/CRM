@@ -21,7 +21,7 @@ export default async function NewLoanPage() {
     <div className="container mx-auto px-4 py-8 max-w-5xl space-y-6">
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="icon" asChild>
-          <Link href="/dashboard">
+          <Link href="/">
             <ArrowLeft className="w-5 h-5" />
           </Link>
         </Button>

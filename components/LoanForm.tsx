@@ -142,7 +142,7 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
       }
 
       setSuccess(true)
-      setTimeout(() => router.push('/dashboard'), 1500)
+      setTimeout(() => router.push('/'), 1500)
     })
   }
 
