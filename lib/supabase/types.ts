@@ -24,7 +24,7 @@ export interface Database {
       }
       loans: {
         Row: {
-          id: string; borrower_id: string; monto_principal: number
+          id: string; numero_prestamo: number; borrower_id: string; monto_principal: number
           tasa_interes_mensual: number; fecha_inicio: string
           cuotas_totales: number; estado: 'activo' | 'finalizado'; created_at: string
         }
@@ -61,7 +61,7 @@ export interface Database {
 }
 
 export interface LoanSummaryRow {
-  id: string; borrower_id: string; borrower_nombre: string
+  id: string; numero_prestamo: number; borrower_id: string; borrower_nombre: string
   borrower_contacto: string | null; created_by: string
   monto_principal: number; tasa_interes_mensual: number
   fecha_inicio: string; cuotas_totales: number; estado: string

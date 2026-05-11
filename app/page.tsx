@@ -204,7 +204,10 @@ export default async function DashboardPage() {
                                 <User className="w-5 h-5 text-slate-500 group-hover:text-blue-600" />
                               </div>
                               <div>
-                                <p className="font-bold text-slate-900">{loan.borrower_nombre}</p>
+                                <p className="font-bold text-slate-900">
+                                  {loan.borrower_nombre} 
+                                  <span className="ml-2 text-xs text-slate-400 font-normal">#{loan.numero_prestamo}</span>
+                                </p>
                                 <p className="text-xs text-slate-500 font-medium">
                                   {loan.cuotas_pagadas} de {loan.cuotas_totales} cuotas pagadas
                                 </p>

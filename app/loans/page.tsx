@@ -56,7 +56,10 @@ export default async function LoansPage() {
               <Card className="hover:bg-muted/50 transition-colors">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div>
-                    <p className="font-bold">{loan.borrower_nombre}</p>
+                    <p className="font-bold">
+                      {loan.borrower_nombre}
+                      <span className="ml-2 text-xs text-muted-foreground font-normal">#{loan.numero_prestamo}</span>
+                    </p>
                     <p className="text-sm text-muted-foreground">
                       Iniciado el {new Date(loan.fecha_inicio).toLocaleDateString('es-PY')}
                     </p>

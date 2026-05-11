@@ -40,6 +40,7 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
   const [isPending, startTransition] = useTransition()
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [createdLoanNumber, setCreatedLoanNumber] = useState<number | null>(null)
 
   // Formulario
   const [borrowerId, setBorrowerId] = useState('')
@@ -111,13 +112,15 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
           cuotas_totales: parseInt(cuotas),
           estado: 'activo',
         })
-        .select('id')
+        .select('id, numero_prestamo')
         .single()
 
       if (loanErr || !loan) {
         setError('Error al guardar el préstamo: ' + loanErr?.message)
         return
       }
+
+      setCreatedLoanNumber(loan.numero_prestamo)
 
       // 2. Insertar cuotas en batch
       const installments = tabla.map(row => ({
@@ -165,7 +168,7 @@ export default function LoanForm({ borrowers, userId }: LoanFormProps) {
               <a 
                 href={getWhatsAppLink(
                   selectedB.contacto, 
-                  WA_MESSAGES.welcome(selectedB.nombre, 'NUEVO', fechaInicio)
+                  WA_MESSAGES.welcome(selectedB.nombre, createdLoanNumber?.toString() || 'NUEVO', fechaInicio)
                 )} 
                 target="_blank" 
                 rel="noopener noreferrer"
